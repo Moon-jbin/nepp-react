@@ -37,7 +37,7 @@ const Say = () => {
         <button
           style={{ color: "yellow" }}
           onClick={() => {
-            setColor("yellow");
+            setColor("yellow");    
           }}
         >
           노란색
