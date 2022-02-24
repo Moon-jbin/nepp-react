@@ -1,10 +1,22 @@
 import "./App.css";
-import IterationSampleComponent from "./components/IterationSampleComponent";
-
+import Info from "./components/Info";
+import { useState } from "react";
 const App = () => {
+  const [showInfo, setShowInfo] = useState(true);
+
+  // const onClick = (e) => {
+  //   return setShowInfo(e);
+  // };
+
+  // const InfoFn = () => {
+  //   return showInfo === true && <Info />;
+  // };
+
   return (
     <>
-      <IterationSampleComponent />
+      <button onClick={() => setShowInfo(true)}>나오기</button>
+      <button onClick={() => setShowInfo(false)}>제거하기</button>
+      {showInfo && <Info />}
     </>
   );
 };
