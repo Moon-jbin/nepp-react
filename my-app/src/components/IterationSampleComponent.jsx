@@ -41,7 +41,7 @@ const IterationSampleComponent = () => {
   const nameList = names.map((item, idx) => {
     return (
       <li key={item.id} onDoubleClick={() => onDoubleClickFn(item.id)}>
-        {item.id}) {item.name}
+        {item.id} {item.name}
       </li>
     );
   });
