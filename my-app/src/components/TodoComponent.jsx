@@ -1,14 +1,13 @@
-import styled from "styled-components";
-import { useState } from "react";
+import styled, { css } from "styled-components";
+import { useState, useRef } from "react";
 const TodoComponent = () => {
   const [input, setInput] = useState("");
   const [list, setList] = useState([
-    { id: 1, content: "할일1" },
-    { id: 2, content: "할일2" },
-    { id: 3, content: "할일3" },
+    { id: 1, content: "할일1", isDone: false },
+    { id: 2, content: "할일2", isDone: false },
+    { id: 3, content: "할일3", isDone: false },
   ]);
-  const [listId, setListId] = useState(4);
-  const [checked, setChecked] = useState(false);
+  const listId = useRef(4);
 
   const onSubmitFn = (e) => {
     e.preventDefault();
@@ -18,21 +17,25 @@ const TodoComponent = () => {
     return setInput(e.target.value);
   };
 
-  const onChangeChkFn = (e) => {
-    console.log(e.target.checked);
-    return setChecked(e.target.checked);
+  const onChangeChkFn = (id, checked) => {
+    const listWrap = list.map((item) => {
+      return item.id === id ? { ...item, isDone: checked } : item;
+      // 덫붙여 써서 값을 바꿔준다.
+    });
+    setList(listWrap);
   };
 
   const onClickAddFn = (e) => {
     if (input === "") {
       return;
     }
-    const listWrap = [...list, { id: listId, content: input }];
+    const listWrap = [
+      ...list,
+      { id: listId.current, content: input, isDone: false },
+    ];
     console.log(listWrap);
 
-    setListId((prev) => {
-      return prev + 1;
-    });
+    listId.current += 1;
     setList(listWrap);
     setInput("");
   };
@@ -44,14 +47,18 @@ const TodoComponent = () => {
     setList(listWrap);
   };
 
-  const newList = list.map((item) => {
+  const newList = list.map(({ id, content, isDone }) => {
     return (
-      <Item key={item.id}>
+      <Item key={id} isDone={isDone}>
         <label style={{ display: "flex" }}>
-          <Checkbox type="checkbox" onChange={onChangeChkFn} />
-          <Content>{item.content}</Content>
+          <Checkbox
+            type="checkbox"
+            onChange={(e) => onChangeChkFn(id, e.target.checked)}
+            // 현재 클릭한 대상을 하는 가리킨다.
+          />
+          <Content>{content}</Content>
         </label>
-        <BtnDelete onClick={() => onClickDeleteFn(item.id)}>-</BtnDelete>
+        <BtnDelete onClick={() => onClickDeleteFn(id)}>-</BtnDelete>
       </Item>
     );
   });
@@ -124,6 +131,16 @@ const Item = styled.li`
   padding: 15px 0 15px 0;
   display: flex;
   border-bottom: 1px solid #ccc;
+  background: ${(props) => props.isDone && "#efefef"};
+
+  ${(props) =>
+    props.isDone &&
+    css`
+      ${Content} {
+        text-decoration: line-through;
+        color: #ddd;
+      }
+    `}
 `;
 const Checkbox = styled.input`
   &[type="checkbox"] {

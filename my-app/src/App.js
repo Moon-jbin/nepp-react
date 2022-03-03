@@ -1,8 +1,8 @@
-import TodoComponent from "./components/TodoComponent";
+import Axios from "./components/Axios";
 const App = () => {
   return (
     <>
-      <TodoComponent />
+      <Axios />
     </>
   );
 };
