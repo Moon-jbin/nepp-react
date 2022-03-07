@@ -1,8 +1,8 @@
-import Axios from "./components/Axios";
+import Bootstrap from "./components/bootstrap/Bootstrap.jsx";
 const App = () => {
   return (
     <>
-      <Axios />
+      <Bootstrap />
     </>
   );
 };
