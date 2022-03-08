@@ -1,10 +1,21 @@
 import styled from "styled-components";
+import { useState } from "react";
 
 const Accordion = ({ data }) => {
-  const dataValue = data.map((item) => {
+  const [activeIndex, setActiveIndex] = useState(null);
+
+  const onClickFn = (index) => {
+    if (activeIndex !== index) {
+      setActiveIndex(index);
+    } else {
+      setActiveIndex(-1);
+    }
+  };
+
+  const dataValue = data.map((item, index) => {
     return (
-      <Item active={false} key={item.id}>
-        <Header>
+      <Item active={activeIndex === index} key={item.id}>
+        <Header onClick={() => onClickFn(index)}>
           {item.title} <BtnArrow />
         </Header>
         <Body>{item.content}</Body>
@@ -34,9 +45,21 @@ const Body = styled.div`
   display: none;
 `;
 
+const BtnArrow = styled.button`
+  width: 20px;
+  height: 20px;
+  border: none;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+  cursor: pointer;
+  transition: transform 0.5s;
+`;
+
 const Item = styled.li`
   ${Body} {
     display: ${({ active }) => active && "block"};
+  }
+  ${BtnArrow} {
+    transform: ${({ active }) => active && "rotate(-180deg)"};
   }
 `;
 const Header = styled.div`
@@ -47,13 +70,6 @@ const Header = styled.div`
   align-items: center;
   padding: 0 5px 0 15px;
   background: #efefef;
-`;
-const BtnArrow = styled.button`
-  width: 20px;
-  height: 20px;
-  border: none;
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
-  cursor: pointer;
 `;
 
 export default Accordion;
