@@ -1,8 +1,16 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Carousel = ({ data }) => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [goodToGo, setGoodToGo] = useState(true);
+  useEffect(() => {
+    setGoodToGo(false);
+
+    setTimeout(() => {
+      setGoodToGo(true);
+    }, 1000);
+  }, [activeIndex]);
 
   const carousel = data.map((item, index) => {
     return <Item key={item.id} src={item.img} active={activeIndex === index} />;
@@ -25,6 +33,7 @@ const Carousel = ({ data }) => {
   });
 
   const onClick = (num) => {
+    if (!goodToGo) return;
     if (num === -1 && activeIndex === 0) {
       setActiveIndex(data.length - 1);
     } else if (num === 1 && activeIndex === data.length - 1) {
