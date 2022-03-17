@@ -55,3 +55,21 @@ export const genreList = [
     name: "스릴러",
   },
 ];
+
+export const nav = [
+  {
+    id: "1",
+    name: "메인",
+    location: "/",
+  },
+  {
+    id: "2",
+    name: "영화",
+    location: "/movie",
+  },
+  {
+    id: "3",
+    name: "책",
+    location: "/book",
+  },
+];

@@ -5,19 +5,23 @@ import { getMovieList } from "../../apis";
 import { useState } from "react";
 import { countryList } from "../../datas";
 import { genreList } from "../../datas";
+import Pagination from "../organisms/Pagination";
 
 const Movie = () => {
+  const [page, setPage] = useState(1);
   const [text, setText] = useState("");
   const [movieList, setMovieList] = useState([]);
   const [country, setCountry] = useState("ALL");
   const [genre, setGenre] = useState("ALL");
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     searchMovieList();
-  }, [country, genre]);
+  }, [country, genre, page]);
 
   const onSubmitFn = async (e) => {
     e.preventDefault();
+    setPage(1);
     // CORS 처리 해야한다..!!
     // const params = {query:text, country};
     // if(country==="ALL")delete params.country;
@@ -27,12 +31,19 @@ const Movie = () => {
   const searchMovieList = async () => {
     if (text === "") return;
 
-    const params = { query: text };
+    // page  = 1 2  3  10 11
+    // start = 1 11 21 91 101
+
+    // 10인 이유는 display의 기본값이 10이기 때문 ! 네이버 api 참고 !
+    const start = 10 * page - 9;
+
+    const params = { query: text, start };
     if (country !== "ALL") params.country = country;
     if (genre !== "ALL") params.genre = genre;
 
-    const { items } = await getMovieList(params);
+    const { items, total } = await getMovieList(params);
     setMovieList(items);
+    setTotal(total);
   };
   // console.log(movieList);
 
@@ -66,6 +77,11 @@ const Movie = () => {
         <BtnSubmit>검색</BtnSubmit>
       </Form>
       <MovieList data={movieList} />
+      <Pagination
+        nowPage={page}
+        total={total}
+        onPageChange={(page) => setPage(page)}
+      />
     </Wrapper>
   );
 };

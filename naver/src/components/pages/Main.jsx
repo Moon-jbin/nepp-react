@@ -1,19 +1,20 @@
 import styled from "styled-components";
-
 import React from "react";
 import { Link } from "react-router-dom";
 
 const Main = () => {
   return (
-    <Wrapper>
-      <PageTitle>영화 & 책 검색</PageTitle>
-      <Link to="/movie">
-        <Button>영화</Button>
-      </Link>
-      <Link to="/book">
-        <Button>책</Button>
-      </Link>
-    </Wrapper>
+    <>
+      <Wrapper>
+        <PageTitle>영화 & 책 검색</PageTitle>
+        <Link to="/movie">
+          <Button>영화</Button>
+        </Link>
+        <Link to="/book">
+          <Button>책</Button>
+        </Link>
+      </Wrapper>
+    </>
   );
 };
 
