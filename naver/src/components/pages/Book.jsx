@@ -1,18 +1,63 @@
 import styled from "styled-components";
 import BookList from "../organisms/BookList";
 import { getBookList } from "../../apis/index";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Pagination from "../organisms/Pagination";
+import { useLocation, useNavigate } from "react-router-dom";
+import qs from "qs";
 
 const Book = () => {
+  const navigate = useNavigate();
+  const { search } = useLocation();
+
   const [text, setText] = useState("");
+  const [query, setQuery] = useState("");
   const [bookList, setBookList] = useState([]);
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    const reset = () => {
+      setText("");
+      setQuery("");
+      setPage(1);
+      setTotal(0);
+      setBookList([]);
+    };
+
+    const { query, page } = qs.parse(search.slice(1));
+    if (query) {
+      setQuery(query);
+      setText(query);
+      if (page) setPage(parseInt(page));
+    } else {
+      reset();
+    }
+  }, []);
+
+  useEffect(() => {
+    searchBookList();
+  }, [page, query]);
 
   const onSubmitFn = async (e) => {
     e.preventDefault();
 
-    const { items } = await getBookList({ query: text });
+    setPage(1);
+    setQuery(text);
+  };
+
+  const searchBookList = async () => {
+    if (query === "") return;
+
+    const start = 10 * page - 9;
+    const { items, total } = await getBookList({ query: query, start });
 
     setBookList(items);
+    setTotal(total);
+
+    const search = qs.stringify({ query: query, page: page });
+
+    navigate({ search: search });
   };
 
   return (
@@ -27,6 +72,11 @@ const Book = () => {
           <BtnSubmit>검색</BtnSubmit>
         </Form>
         <BookList data={bookList} />
+        <Pagination
+          nowPage={page}
+          total={total}
+          onPageChange={(page) => setPage(page)}
+        />
       </Wrapper>
     </>
   );

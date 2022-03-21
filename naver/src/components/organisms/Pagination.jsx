@@ -3,10 +3,20 @@ const Pagination = ({ onPageChange, total, nowPage }) => {
   // total    = 1 10  11  20  21 30  91  100  101  110
   // lastPage = 1  1   2   2   3  3  10   10   11   11
 
+  // nowPage   =  1  10  11 20 21 100 101
+  // startPage =  1   1  11 11 21 91  101
+  // endPage   =  10 10  20 20 30 100 110
+
+  // endPage 는 2가지 경우가 있다.
+  // startPage, lastPage
+
   const lastpage = Math.ceil(total / 10);
 
+  const startPage = Math.ceil(nowPage / 10) * 10 - 9;
+  const endpage = startPage + 9 > lastpage ? lastpage : startPage + 9;
+
   const pageList = [];
-  for (let i = 1; i <= lastpage; i++) {
+  for (let i = startPage; i <= endpage; i++) {
     pageList.push(i);
   }
 
