@@ -1,11 +1,14 @@
 import axios from "axios";
 
+const instance = axios.create({
+  headers: {
+    "X-Naver-Client-Id": "HC2v5RaXKKNAhu1IZRav",
+    "X-Naver-Client-Secret": "72GmZ4lAiu",
+  },
+});
+
 export const getMovieList = async (params) => {
-  const { data } = await axios.get("/v1/search/movie.json", {
-    headers: {
-      "X-Naver-Client-Id": "HC2v5RaXKKNAhu1IZRav",
-      "X-Naver-Client-Secret": "72GmZ4lAiu",
-    },
+  const { data } = await instance.get("/v1/search/movie.json", {
     params: params,
   });
 
@@ -13,11 +16,7 @@ export const getMovieList = async (params) => {
 };
 
 export const getBookList = async (params) => {
-  const { data } = await axios.get("/v1/search/book.json", {
-    headers: {
-      "X-Naver-Client-Id": "HC2v5RaXKKNAhu1IZRav",
-      "X-Naver-Client-Secret": "72GmZ4lAiu",
-    },
+  const { data } = await instance.get("/v1/search/book.json", {
     params: params,
   });
 
@@ -25,11 +24,7 @@ export const getBookList = async (params) => {
 };
 
 export const getBookDetaile = async (params) => {
-  const { data } = await axios.get("/v1/search/book_adv.json", {
-    headers: {
-      "X-Naver-Client-Id": "HC2v5RaXKKNAhu1IZRav",
-      "X-Naver-Client-Secret": "72GmZ4lAiu",
-    },
+  const { data } = await instance.get("/v1/search/book_adv.json", {
     params: params,
   });
 
