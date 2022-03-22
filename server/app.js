@@ -7,7 +7,7 @@ import indexRouter from "./routes/index.js";
 import usersRouter from "./routes/users.js";
 
 var app = express();
-
+const __dirname = path.resolve();
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
