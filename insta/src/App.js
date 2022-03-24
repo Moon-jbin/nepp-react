@@ -1,8 +1,24 @@
 import Router from "./Router";
+import instance from "./apis";
+import UserContext from "./contexts/user";
+import { useState } from "react";
 function App() {
+  const { token } = localStorage;
+  if (token) {
+    instance.defaults.headers.common["authorization"] = token;
+  }
+
+  const [isLogin, setIsLogin] = useState(!!token);
+  const value = {
+    isLogin,
+    setIsLogin: (val) => setIsLogin(val),
+  };
+
   return (
     <>
-      <Router />
+      <UserContext.Provider value={value}>
+        <Router />
+      </UserContext.Provider>
     </>
   );
 }
