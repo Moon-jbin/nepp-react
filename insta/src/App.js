@@ -2,6 +2,9 @@ import Router from "./Router";
 import instance from "./apis";
 import UserContext from "./contexts/user";
 import { useState } from "react";
+
+// 새로고침 처리
+
 function App() {
   const { token } = localStorage;
   if (token) {
