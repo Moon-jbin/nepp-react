@@ -23,7 +23,9 @@ const PageHeader = () => {
           </InputWrap>
           <Nav>
             <InputBox>
-              <IconHome />
+              <Link to="/">
+                <IconHome />
+              </Link>
             </InputBox>
             <InputBox>
               <IconDirect />
@@ -58,6 +60,9 @@ const Header = styled.header`
   width: 100%;
   height: 60px;
   border-bottom: 1px solid #ccc;
+  position: sticky;
+  top: 0;
+  background: #fff;
 `;
 const Contents = styled.div`
   display: flex;
