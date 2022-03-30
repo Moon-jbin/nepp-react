@@ -62,6 +62,7 @@ const Header = styled.header`
   border-bottom: 1px solid #ccc;
   position: sticky;
   top: 0;
+  z-index: 1;
   background: #fff;
 `;
 const Contents = styled.div`

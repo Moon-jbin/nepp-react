@@ -8,7 +8,7 @@ import PostImgSlide from "./PostImgSlide";
 import React from "react";
 
 const MainPostList = ({ data }) => {
-  const postList = data.map((item, idx) => {
+  const postList = data.map((item) => {
     return (
       <BoardWrap key={item.id}>
         <UserInfoWrap>
@@ -21,13 +21,10 @@ const MainPostList = ({ data }) => {
           </OptionMoreWrap>
         </UserInfoWrap>
         <ContentWrap>
-          <ImageBox>
-            <PostImgSlide data={item.itemList} />
-            {item.imageList.map((item) => {
-              return;
-            })}
-          </ImageBox>
-          {/*사진 올라가는 곳*/}
+        
+            <PostImgSlide data={item.imageList} />
+        {/*사진 올라가는 곳*/}
+        
           <BtnBox>
             <IconLikeWrap>
               <IconLike />
@@ -43,10 +40,14 @@ const MainPostList = ({ data }) => {
           <CommentWrap>
             <Like>좋아요 {item.likes.total}개</Like>
             <CommentBox>
+              { item.replys.items.map((item)=>{
+                  return(
               <CommUserInfo key={item.id}>
                 <CommUserId>{item.user.name}</CommUserId>
                 <CommUserText>{item.content}</CommUserText>
               </CommUserInfo>
+                  )    
+              }) }
             </CommentBox>
             <CommentInputBox>
               <InputWrap>
@@ -104,9 +105,6 @@ const OptionMoreWrap = styled.div``;
 const ContentWrap = styled.div`
   width: 100%;
 `;
-const ImageBox = styled.div`
-  width: 100%;
-`;
 
 const BtnBox = styled.div`
   width: 100%;
@@ -147,7 +145,7 @@ const CommUserId = styled.span`
   margin: 0 5px 0 0;
 `;
 const CommUserText = styled.p`
-  width: 500px;
+  width: 100%;
   font-size: 14px;
   overflow: hidden;
   text-overflow: ellipsis;
