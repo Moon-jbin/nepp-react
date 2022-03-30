@@ -4,12 +4,21 @@ import { ReactComponent as IconNewBoard } from "../../assets/images/newBoard.svg
 import { ReactComponent as IconFindPerson } from "../../assets/images/findPerson.svg";
 import { ReactComponent as IconActiveFeed } from "../../assets/images/activeFeed.svg";
 import { ReactComponent as IconSearch } from "../../assets/images/search.svg";
+
 import styled from "styled-components";
 import { Link, Outlet } from "react-router-dom";
+import { useState } from "react";
+import ModalComponent from "./ModalComponent";
 
 const PageHeader = () => {
+  const [modal, setModal] = useState(false);
+
+  console.log(modal);
+
   return (
     <>
+      {modal && <ModalComponent activeModal={setModal} />}
+
       <Header>
         <Contents>
           <LogoWrap>
@@ -31,7 +40,7 @@ const PageHeader = () => {
               <IconDirect />
             </InputBox>
             <InputBox>
-              <IconNewBoard />
+              <IconNewBoard onClick={() => setModal(true)} />
             </InputBox>
             <InputBox>
               <IconFindPerson />
@@ -47,7 +56,6 @@ const PageHeader = () => {
           </Nav>
         </Contents>
       </Header>
-
       <OutletWrapper>
         <Outlet />
       </OutletWrapper>

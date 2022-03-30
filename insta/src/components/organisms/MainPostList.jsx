@@ -13,18 +13,16 @@ const MainPostList = ({ data }) => {
       <BoardWrap key={item.id}>
         <UserInfoWrap>
           <UserInfoBox>
-            <UserImg src={item.user.profileImage} />
-            <UserId>{item.user.name}</UserId>
+            <UserImg src={item.profile_image} />
+            <UserId>{item.name}</UserId>
           </UserInfoBox>
           <OptionMoreWrap>
             <IconOptionMore />
           </OptionMoreWrap>
         </UserInfoWrap>
         <ContentWrap>
-        
-            <PostImgSlide data={item.imageList} />
-        {/*사진 올라가는 곳*/}
-        
+          <PostImgSlide data={item.imageList} />
+          {/*사진 올라가는 곳*/}
           <BtnBox>
             <IconLikeWrap>
               <IconLike />
@@ -38,16 +36,16 @@ const MainPostList = ({ data }) => {
           </BtnBox>{" "}
           {/* 좋아요, 댓글, 등등 선택지 */}
           <CommentWrap>
-            <Like>좋아요 {item.likes.total}개</Like>
+            <Like>좋아요 {item.likes?.total}개</Like>
             <CommentBox>
-              { item.replys.items.map((item)=>{
-                  return(
-              <CommUserInfo key={item.id}>
-                <CommUserId>{item.user.name}</CommUserId>
-                <CommUserText>{item.content}</CommUserText>
-              </CommUserInfo>
-                  )    
-              }) }
+              {item.replys?.items.map((item) => {
+                return (
+                  <CommUserInfo key={item.id}>
+                    <CommUserId>{item.name}</CommUserId>
+                    <CommUserText>{item.content}</CommUserText>
+                  </CommUserInfo>
+                );
+              })}
             </CommentBox>
             <CommentInputBox>
               <InputWrap>
