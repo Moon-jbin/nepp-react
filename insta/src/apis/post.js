@@ -12,3 +12,16 @@ export const getPostsMain = async (data) => {
     return err.response.data;
   }
 };
+
+export const postPosts = async (data) => {
+  try {
+    const result = await instance({
+      method: "POST",
+      url: "/posts",
+      data
+    });
+    return result.data;
+  } catch (err) {
+    return err.response.data;
+  }
+};

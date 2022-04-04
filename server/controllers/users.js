@@ -66,7 +66,7 @@ export const postUsersToken = async (req, res) => {
 
   //토큰생성
   const payload = { userId: user.id };
-  const option = { expiresIn: "1s" };
+  const option = { expiresIn: "1d" };
 
   const token = jwt.sign(payload, secretKey, option);
   res.send({ success: true, token });

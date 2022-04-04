@@ -34,7 +34,7 @@ const PostImgSlide = ({ data }) => {
   });
 
   const PageBtnList = data.map((item, idx) => {
-    return <PageBtn key={item.id} active={activeIndex === idx}></PageBtn>;
+    return <PageBtn key={idx} active={activeIndex === idx}></PageBtn>;
   });
 
   return (

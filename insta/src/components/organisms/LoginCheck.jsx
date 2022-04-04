@@ -15,7 +15,7 @@ const LoginCheck = () => {
 
   return (
     <>
-      <Outlet />
+      { isLogin && <Outlet /> }
     </>
   );
 };
