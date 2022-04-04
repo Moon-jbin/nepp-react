@@ -13,8 +13,6 @@ import ModalComponent from "./ModalComponent";
 const PageHeader = () => {
   const [modal, setModal] = useState(false);
 
-  console.log(modal);
-
   return (
     <>
       {modal && <ModalComponent activeModal={setModal} />}

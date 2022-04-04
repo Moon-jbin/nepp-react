@@ -24,7 +24,6 @@ export const getPostsMain = async (req, res) => {
   res.send({ success: true, postList });
 };
 
-
 export const postPosts = async (req, res) => {
   // 포스트 생성
   // 1. 요청을 한 사람이 누구인지 토큰을 통해서 확인
@@ -34,18 +33,14 @@ export const postPosts = async (req, res) => {
   const token = req.headers.authorization;
 
   let payload;
-  try{
+  try {
     payload = jwt.verify(token, JWT_SECRET_KEY);
-
-  }catch(e){
-    return res.status(401).send({success:false})
+  } catch (e) {
+    return res.status(401).send({ success: false });
   }
-  
-  const {userId} = payload;
-  const { fileList, content} = req.body;
 
-
-
+  const { userId } = payload;
+  const { fileList, content } = req.body;
 
   const query = `
     INSERT INTO post(user_id, content)
@@ -53,9 +48,18 @@ export const postPosts = async (req, res) => {
   `;
   const [newPost] = await conn.query(query);
 
-  const postId = newPost.insertId
+  const postId = newPost.insertId;
 
+  const promiseList = fileList.map((file) => {
+    const query2 = `
+    INSERT INTO image(post_id, url)
+    VALUES(${postId}, '${file}');
+  `;
 
+    return conn.query(query2);
+  });
 
-  res.send("ASDF");
-}
+  await Promise.all(promiseList);
+
+  res.send({ success: true });
+};

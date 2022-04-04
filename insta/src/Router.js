@@ -1,5 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Login, Main, Signup, Logout, Profile } from "./components/pages";
+import {
+  Login,
+  Main,
+  Signup,
+  Logout,
+  Profile,
+  ProfileEdit,
+} from "./components/pages";
 import { PageHeader } from "./components/organisms";
 import LoginCheck from "./components/organisms/LoginCheck";
 
@@ -11,6 +18,7 @@ const Router = () => {
           <Route path="/" element={<PageHeader />}>
             <Route path="/profile" element={<Profile />} />
             <Route path="/" element={<Main />} />
+            <Route path="/profile/edit" element={<ProfileEdit />} />
           </Route>
         </Route>
 
