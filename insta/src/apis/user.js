@@ -50,3 +50,16 @@ export const patchMyProfileImage = async (data) => {
     return err.response.data;
   }
 };
+
+export const putUsersMyInfo = async (data) => {
+  try {
+    const result = await instance({
+      method: "PUT",
+      url: "/users/my",
+      data,
+    });
+    return result.data;
+  } catch (err) {
+    return err.response.data;
+  }
+};

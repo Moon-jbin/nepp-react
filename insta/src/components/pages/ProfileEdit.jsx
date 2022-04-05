@@ -1,10 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { getMyInfo, patchMyProfileImage } from "../../apis/user";
+import {
+  getMyInfo,
+  patchMyProfileImage,
+  putUsersMyInfo,
+} from "../../apis/user";
 import { uploadImage } from "../../apis/upload";
 
 const ProfileEdit = () => {
-  const [form, setForm] = useState({});
+  const [form, setForm] = useState({
+    name: "",
+    user_name: "",
+    memo: "",
+  });
   const fileEl = useRef(null);
   const { memo, profile_image, name, user_name } = form;
 
@@ -24,20 +32,37 @@ const ProfileEdit = () => {
     refreshInfo();
   };
 
+  const onClickFn = async (e) => {
+    e.preventDefault();
+    await putUsersMyInfo({ name, user_name, memo });
+  };
+
   return (
     <>
       <Container>
         <NameWrap>
           <Name>이름</Name>
-          <InputName value={name} />
+          <InputName
+            value={name}
+            name="name"
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
+          />
         </NameWrap>
         <IntroWrap>
           <IntroTitle>소개</IntroTitle>
-          <Textarea value={memo} />
+          <Textarea
+            value={memo}
+            name="memo"
+            onChange={(e) => setForm({ ...form, memo: e.target.value })}
+          />
         </IntroWrap>
         <UserNameWrap>
           <UserName>사용자 이름</UserName>
-          <UserNameInput value={user_name} />
+          <UserNameInput
+            value={user_name}
+            name="user_name"
+            onChange={(e) => setForm({ ...form, user_name: e.target.value })}
+          />
         </UserNameWrap>
         <ProfileImageWrap>
           <ProfileImage src={profile_image} />
@@ -55,7 +80,7 @@ const ProfileEdit = () => {
             />
           </ProfileWrap>
         </ProfileImageWrap>
-        <SubmitBtn>제출</SubmitBtn>
+        <SubmitBtn onClick={onClickFn}>제출</SubmitBtn>
       </Container>
     </>
   );
@@ -169,6 +194,7 @@ const SubmitBtn = styled.button`
   background: #0095f6;
   border: none;
   border-radius: 5px;
+  cursor: pointer;
 `;
 
 export default ProfileEdit;
